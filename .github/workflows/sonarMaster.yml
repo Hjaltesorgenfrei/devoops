@@ -19,13 +19,13 @@ jobs:
         dotnet-version: 3.1.101
     - name: Restore
       run: dotnet restore
-    - name: Restore
+    - name: Install sonarscanner
       run: dotnet tool install --global dotnet-sonarscanner
-    - name: Restore
+    - name: Start Scanner
       run: dotnet sonarscanner begin /k:jlndk_devoops /d:sonar.host.url=https://sonarcloud.io /o:jlndk /d:sonar.login=${{ secrets.SONAR_KEY }}
-    - name: Restore
-      run: build --configuration Release
-    - name: Restore
-      run: test
-    - name: Restore
-      run: sonarscanner end /d:sonar.login=${{ secrets.SONAR_KEY }}
+    - name: Dotnet build
+      run: dotnet build --configuration Release
+    - name: dotnet test
+      run: dotnet test
+    - name: Upload sonarcloud report
+      run: dotnet sonarscanner end /d:sonar.login=${{ secrets.SONAR_KEY }}
