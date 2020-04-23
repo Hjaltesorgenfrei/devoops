@@ -1,0 +1,31 @@
+name: Run SonarCloud on code
+
+on:
+  push:
+    branches:
+      - master
+
+
+jobs: 
+  build:
+    
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+    - name: Restore
+      run: dotnet restore
+    - name: Restore
+      run: dotnet tool install --global dotnet-sonarscanner
+    - name: Restore
+      run: dotnet sonarscanner begin /k:jlndk_devoops /d:sonar.host.url=https://sonarcloud.io /o:jlndk /d:sonar.login=${{ secrets.SONAR_KEY }}
+    - name: Restore
+      run: build --configuration Release
+    - name: Restore
+      run: test
+    - name: Restore
+      run: sonarscanner end /d:sonar.login=${{ secrets.SONAR_KEY }}
