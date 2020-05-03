@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with: 
+          fetch-depth: 0
       - name: Build Report 
         run: |
           cd report
@@ -28,6 +30,7 @@ jobs:
           then 
             exit 1
           else 
+            echo 'Tag Found: $TAG'
             ::set-output name=tag::$TAG
           fi
       - name: 'Get next minor version'
