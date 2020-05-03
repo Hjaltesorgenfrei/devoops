@@ -25,6 +25,7 @@ jobs:
       - name: 'Get Previous tag'
         id: previoustag
         run: | 
+          git fetch -t 
           TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
           if [ -z "$TAG" ] 
           then 
