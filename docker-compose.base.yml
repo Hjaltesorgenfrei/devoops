@@ -46,15 +46,20 @@ services:
             - ./postgresdata:/var/lib/postgresql/data
 
     prometheus:
-        image: prom/prometheus
+        # image: jlndk/devoops-prometheus
+        build:
+            context: "prometheus"
+            dockerfile: "Dockerfile"
         volumes:
-            - ./prometheus.yml:/etc/prometheus/prometheus.yml
             - prometheus_data:/prometheus
 
     grafana:
         image: grafana/grafana
         volumes:
             - grafana_data:/var/lib/grafana
+            - ./grafana/provisioning:/etc/grafana/provisioning
+            - ./grafana/config.ini:/etc/grafana/config.ini
+            - ./grafana/dashboards:/var/lib/grafana/dashboards
         depends_on: 
             - prometheus
     
