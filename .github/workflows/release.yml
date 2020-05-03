@@ -32,7 +32,7 @@ jobs:
             exit 1
           else 
             echo 'Tag Found: $TAG'
-            ::set-output name=tag::$TAG
+            echo ::set-output name=tag::$TAG
           fi
       - name: 'Get next minor version'
         id: semvers
