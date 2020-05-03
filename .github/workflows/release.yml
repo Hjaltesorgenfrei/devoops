@@ -22,9 +22,14 @@ jobs:
           ./buildreport.sh
       - name: 'Get Previous tag'
         id: previoustag
-        uses: WyriHaximus/github-action-get-previous-tag@0.1.0
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        run: | 
+          TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+          if [ -z "$TAG" ] 
+          then 
+            exit 1
+          else 
+            ::set-output name=tag::$TAG
+          fi
       - name: 'Get next minor version'
         id: semvers
         uses: WyriHaximus/github-action-next-semvers@0.1.0
